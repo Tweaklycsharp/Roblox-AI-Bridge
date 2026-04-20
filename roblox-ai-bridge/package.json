@@ -1,0 +1,11 @@
+{
+  "name": "roblox-ai-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pont local entre Roblox Studio et l'API OpenAI",
+  "scripts": {
+    "start": "node bridge/server.js",
+    "start:cmd": "start start-bridge.cmd",
+    "start:powershell": "powershell -ExecutionPolicy Bypass -File .\\start-bridge.ps1"
+  }
+}
