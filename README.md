@@ -11,9 +11,30 @@ This project acts as a translator between your intent and the Roblox API.
 
 * The plugin captures a simplified snapshot of your project
 * It sends it to a local Node.js server
-* The server queries an AI via the OpenAI API
+* The server queries an AI
 * The AI returns structured actions (JSON)
 * The plugin streams and applies these actions in real time (SSE)
+
+## Available Versions
+
+Roblox AI Bridge supports multiple backends depending on how you want to run your AI:
+
+### OpenAI Version (Cloud)
+
+* Uses OpenAI API (GPT models)
+* Requires an API key
+* Best performance and reliability
+* Recommended for most users
+
+### Ollama Version (Local AI)
+
+* Runs entirely on your machine via Ollama
+* No API key required
+* Works offline
+* Performance depends on your hardware
+
+💡 Want support for other AIs like Claude or Gemini?
+You can message me on Discord and I can help you set it up or adapt the bridge.
 
 ## Features
 
@@ -25,14 +46,13 @@ This project acts as a translator between your intent and the Roblox API.
 
 ## Limitations
 
-* No direct persistent connection to an AI (API-based only)
-* Requires an OpenAI API key
+* No direct persistent connection to an AI (API-based or local inference only)
 * Prototype: mainly supports basic operations
 * Actions are auto-applied → use a copy of your project or rely on `Ctrl+Z`
 
 ## Project structure
 
-```
+```id="b6o9g8"
 bridge/server.js           # Local server (HTTP + SSE)
 plugin/RobloxAIBridge.lua # Roblox Studio plugin
 .env.example              # Environment config
@@ -40,12 +60,21 @@ plugin/RobloxAIBridge.lua # Roblox Studio plugin
 
 ## Installation
 
-### Local server
+### Local server (OpenAI)
 
-```powershell
+```powershell id="r4n2kd"
 cd <project-path>
 $env:OPENAI_API_KEY="your_api_key"
 $env:OPENAI_MODEL="gpt-5.4-mini"
+node bridge/server.js
+```
+
+### Local server (Ollama)
+
+Make sure Ollama is installed and running, then:
+
+```powershell id="u8xk1m"
+cd <project-path>
 node bridge/server.js
 ```
 
@@ -71,7 +100,7 @@ Server runs on:
 
 ### Example prompts
 
-```
+```id="6r5z0c"
 create a blue anchored Part in Workspace, size 8x1x8, name it SpawnPlate
 create a ScreenGui with a centered TextLabel saying Welcome
 replace the selected script with print("Hello from AI bridge")
@@ -97,7 +126,7 @@ Manually injects actions (no AI required)
 
 ## Security notes
 
-* Keep your API key server-side only
+* Keep API keys server-side only
 * Do not expose the bridge to the internet
 * Test on a copy of your project
 * Always review applied changes
